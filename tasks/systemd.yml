@@ -1,0 +1,15 @@
+---
+- include_vars: systemd-vars.yml
+- name: construct systemd env file
+  when: node_exporter_systemd_service.env is defined
+  include_tasks: systemd-env.yml
+- name: templating {{ node_exporter_fq_service_unit }}
+  become: yes
+  become_user: root
+  template:
+    src: node_exporter.service.j2
+    dest: '{{ node_exporter_fq_service_unit }}'
+    mode: 0600
+    owner: '{{ node_exporter_service_def.user | default("root") }}'
+    group: '{{ node_exporter_service_def.group | default("root") }}'
+  notify: node_exporter_daemon_reload

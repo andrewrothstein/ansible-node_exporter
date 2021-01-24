@@ -1,0 +1,37 @@
+#jinja2: trim_blocks:False
+[Unit]
+Description={{ node_exporter_service_def.description }}
+{% if node_exporter_systemd.after is defined %}
+After={{ node_exporter_systemd.after | join(" ") }}
+{% endif %}
+ConditionFileIsExecutable={{ node_exporter_service_def.exe }}
+
+[Service]
+{% if node_exporter_systemd.start_limit is defined %}
+  {% if node_exporter_systemd.start_limit.interval is defined %}
+StartLimitInterval={{ node_exporter_systemd.start_limit.interval }}
+  {% endif %}
+  {% if node_exporter_systemd.start_limit.burst is defined %}
+StartLimitInterval={{ node_exporter_systemd.start_limit.burst }}
+  {% endif %}
+{% endif %}
+
+{% if node_exporter_systemd_service.env is defined %}EnvironmentFile={{ node_exporter_fq_env_file }}{% endif %}
+
+ExecStart={{ node_exporter_service_def.exe }} {{ node_exporter_service_def.args }}
+
+{% if node_exporter_systemd_service.restart is defined %}
+  {% if node_exporter_systemd_service.restart.policy is defined %}
+Restart={{ node_exporter_systemd_service.restart.policy }}
+  {% endif %}
+  {% if node_exporter_systemd_service.restart.sec is defined %}
+RestartSec={{ node_exporter_systemd_service.restart.sec }}
+  {% endif %}
+{% endif %}
+
+{% if node_exporter_wanted_by is defined %}
+[Install]
+  {% for wb in node_exporter_wanted_by.items() %}
+WantedBy={{ wb }}
+  {% endfor %}
+{% endif %}
