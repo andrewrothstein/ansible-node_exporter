@@ -1,3 +1,0 @@
----
-node_exporter_fq_env_file: '{{ node_exporter_systemd_service.env.dir }}/{{ node_exporter_systemd_service.env.filename }}'
-node_exporter_fq_service_unit: '{{ node_exporter_systemd_service.units | default("/etc/systemd/system") }}/{{ node_exporter_service_def.name }}.service'

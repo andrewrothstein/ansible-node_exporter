@@ -37,5 +37,4 @@ dependencies:
     prometheus_installer_versions:
       - name: node_exporter
         version: '{{ node_exporter_ver }}'
-
-
+  - role: andrewrothstein.systemd_service

@@ -1,15 +1,2 @@
 ---
 # handlers file for node_exporter
-- name: node_exporter_daemon_reload
-  become: yes
-  become_user: root
-  when: node_exporter_service_activate
-  systemd:
-    daemon_reload: yes
-- name: node_exporter_restart
-  become: yes
-  become_user: root
-  when: node_exporter_service_activate
-  service:
-    name: '{{ node_exporter_service_def.name }}'
-    state: restarted
