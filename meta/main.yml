@@ -38,4 +38,4 @@ dependencies:
       - name: node_exporter
         version: '{{ node_exporter_ver }}'
   - role: andrewrothstein.systemd_service
-    version: v1.0.0
+    version: v1.1.0
