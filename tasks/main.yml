@@ -20,6 +20,7 @@
 - name: start/enable service
   become: yes
   become_user: root
+  when: node_exporter_service_activate
   service:
     name: '{{ node_exporter_service_def.name }}'
     state: started
